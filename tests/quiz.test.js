@@ -10,6 +10,7 @@ const {
   shuffle,
   isCorrect,
   calculatePercentage,
+  isNewBestScore,
   formatTimeLeft,
   getFeedbackMessage,
   getGrade,
@@ -84,6 +85,22 @@ test("calculatePercentage rounds to a whole number", () => {
 
 test("calculatePercentage returns 0 when there are no questions", () => {
   assert.equal(calculatePercentage(0, 0), 0);
+});
+
+test("isNewBestScore treats the first completed score as a new best", () => {
+  assert.equal(isNewBestScore(0, null), true);
+});
+
+test("isNewBestScore returns true for a higher score", () => {
+  assert.equal(isNewBestScore(81, 80), true);
+});
+
+test("isNewBestScore returns false for a tied score", () => {
+  assert.equal(isNewBestScore(80, 80), false);
+});
+
+test("isNewBestScore returns false for a lower score", () => {
+  assert.equal(isNewBestScore(79, 80), false);
 });
 
 test("formatTimeLeft displays the remaining seconds", () => {
