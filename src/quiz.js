@@ -75,6 +75,13 @@ function calculatePercentage(score, total) {
 }
 
 /**
+ * Returns true when the current percentage is a new personal best.
+ */
+function isNewBestScore(current, best) {
+  return best === null || current > best;
+}
+
+/**
  * Formats the remaining quiz time for display.
  */
 function formatTimeLeft(seconds) {
@@ -110,6 +117,7 @@ if (typeof module !== "undefined" && module.exports) {
     shuffle,
     isCorrect,
     calculatePercentage,
+    isNewBestScore,
     formatTimeLeft,
     getFeedbackMessage,
     getGrade,
