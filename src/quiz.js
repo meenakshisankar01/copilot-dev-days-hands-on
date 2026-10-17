@@ -2,6 +2,51 @@
 // This file has NO browser (DOM) code so it can be tested with Node.js.
 
 /**
+ * Creates a fresh quiz state from the supplied questions.
+ */
+function createQuiz(questions) {
+  return {
+    questions: [...questions],
+    current: 0,
+    score: 0,
+    answered: false,
+  };
+}
+
+/**
+ * Returns an updated quiz state and whether the selected answer is correct.
+ */
+function answerQuestion(state, selectedIndex) {
+  const correct = isCorrect(state.questions[state.current], selectedIndex);
+  return {
+    state: {
+      ...state,
+      score: state.score + (correct ? 1 : 0),
+      answered: true,
+    },
+    correct,
+  };
+}
+
+/**
+ * Returns a new state advanced to the next question.
+ */
+function advanceQuestion(state) {
+  return {
+    ...state,
+    current: state.current + 1,
+    answered: false,
+  };
+}
+
+/**
+ * Returns true when the quiz has no remaining questions.
+ */
+function isQuizFinished(state) {
+  return state.current >= state.questions.length;
+}
+
+/**
  * Returns a new array with the items in random order.
  * The original array is not changed.
  */
@@ -58,6 +103,10 @@ function getGrade(percentage) {
 // Lets Node.js tests load this file. Browsers ignore this block.
 if (typeof module !== "undefined" && module.exports) {
   module.exports = {
+    createQuiz,
+    answerQuestion,
+    advanceQuestion,
+    isQuizFinished,
     shuffle,
     isCorrect,
     calculatePercentage,

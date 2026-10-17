@@ -1,7 +1,7 @@
 // UI code: connects the quiz logic (quiz.js) to the page (index.html).
 
 const QUESTION_TIME_SECONDS = 15;
-const state = { questions: [], current: 0, score: 0, answered: false };
+let state = createQuiz([]);
 
 const startScreen = document.getElementById("start-screen");
 const quizScreen = document.getElementById("quiz-screen");
@@ -51,17 +51,13 @@ function showScreen(screenToShow) {
 
 function startQuiz() {
   stopTimer();
-  state.questions = shuffle(QUESTIONS);
-  state.current = 0;
-  state.score = 0;
-  state.answered = false;
+  state = createQuiz(shuffle(QUESTIONS));
   showScreen(quizScreen);
   renderQuestion();
 }
 
 function renderQuestion() {
   stopTimer();
-  state.answered = false;
   const question = state.questions[state.current];
   progressText.textContent = `Question ${state.current + 1} of ${state.questions.length}`;
   questionText.textContent = question.question;
@@ -84,15 +80,15 @@ function renderQuestion() {
 
 function selectAnswer(selectedIndex, selectedButton) {
   if (state.answered) return;
-  state.answered = true;
+  const result = answerQuestion(state, selectedIndex);
+  state = result.state;
   stopTimer();
 
   const question = state.questions[state.current];
   const buttons = optionsList.querySelectorAll("button");
   buttons.forEach((button) => (button.disabled = true));
 
-  if (isCorrect(question, selectedIndex)) {
-    state.score++;
+  if (result.correct) {
     selectedButton.classList.add("correct");
     feedbackText.textContent = getFeedbackMessage(true);
   } else {
@@ -107,7 +103,7 @@ function selectAnswer(selectedIndex, selectedButton) {
 
 function timeOutQuestion() {
   if (state.answered) return;
-  state.answered = true;
+  state = answerQuestion(state, -1).state;
 
   const question = state.questions[state.current];
   const buttons = optionsList.querySelectorAll("button");
@@ -120,8 +116,8 @@ function timeOutQuestion() {
 
 function nextQuestion() {
   stopTimer();
-  state.current++;
-  if (state.current < state.questions.length) {
+  state = advanceQuestion(state);
+  if (!isQuizFinished(state)) {
     renderQuestion();
   } else {
     showResults();
