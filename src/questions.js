@@ -36,6 +36,26 @@ const QUESTIONS = [
     ],
     answer: 1,
   },
+  {
+    question: "Where are GitHub Actions workflow files stored?",
+    options: [".github/workflows", ".github/actions", "workflows/.github", "actions.yml"],
+    answer: 0,
+  },
+  {
+    question: "Which event can trigger a workflow when code is pushed?",
+    options: ["schedule", "workflow_dispatch", "push", "pull_request_review"],
+    answer: 2,
+  },
+  {
+    question: "What does a GitHub-hosted runner provide for a workflow job?",
+    options: [
+      "A repository license",
+      "A pull request template",
+      "A branch protection rule",
+      "A virtual machine to run the job",
+    ],
+    answer: 3,
+  },
 ];
 
 // Lets Node.js tests load this file. Browsers ignore this block.
