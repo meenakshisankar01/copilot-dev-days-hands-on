@@ -37,17 +37,32 @@ function formatTimeLeft(seconds) {
 }
 
 /**
+ * Returns the feedback message for an answer or a timed-out question.
+ */
+function getFeedbackMessage(answerIsCorrect, timedOut = false) {
+  if (timedOut) return "Time's up!";
+  return answerIsCorrect ? "Correct!" : "Not quite. The correct answer is highlighted.";
+}
+
+/**
  * Turns a percentage into a grade.
  * A = 90% or more, B = 75% or more, C = 50% or more.
  */
 function getGrade(percentage) {
-  if (percentage > 90) return "A";
-  if (percentage > 75) return "B";
-  if (percentage > 50) return "C";
+  if (percentage >= 90) return "A";
+  if (percentage >= 75) return "B";
+  if (percentage >= 50) return "C";
   return "Keep practicing";
 }
 
 // Lets Node.js tests load this file. Browsers ignore this block.
 if (typeof module !== "undefined" && module.exports) {
-  module.exports = { shuffle, isCorrect, calculatePercentage, formatTimeLeft, getGrade };
+  module.exports = {
+    shuffle,
+    isCorrect,
+    calculatePercentage,
+    formatTimeLeft,
+    getFeedbackMessage,
+    getGrade,
+  };
 }

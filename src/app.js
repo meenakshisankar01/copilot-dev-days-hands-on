@@ -94,11 +94,11 @@ function selectAnswer(selectedIndex, selectedButton) {
   if (isCorrect(question, selectedIndex)) {
     state.score++;
     selectedButton.classList.add("correct");
-    feedbackText.textContent = "Correct!";
+    feedbackText.textContent = getFeedbackMessage(true);
   } else {
     selectedButton.classList.add("wrong");
     buttons[question.answer].classList.add("correct");
-    feedbackText.textContent = "Not quite. The correct answer is highlighted.";
+    feedbackText.textContent = getFeedbackMessage(false);
   }
 
   nextButton.hidden = false;
@@ -113,7 +113,7 @@ function timeOutQuestion() {
   const buttons = optionsList.querySelectorAll("button");
   buttons.forEach((button) => (button.disabled = true));
   buttons[question.answer].classList.add("correct");
-  feedbackText.textContent = "Time's up!";
+  feedbackText.textContent = getFeedbackMessage(false, true);
   nextButton.hidden = false;
   nextButton.focus();
 }
