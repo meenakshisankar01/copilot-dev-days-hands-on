@@ -97,7 +97,7 @@ copilot-dev-days-workshop/
     ├── quiz.test.js        ← logic tests (one fails on purpose!)
     └── questions.test.js   ← validates quiz data
 ```
-
+![Tests](https://github.com/meenakshisankar01/copilot-dev-days-hands-on/actions/workflows/test.yml/badge.svg)
 ---
 
 Adapted from the [Copilot Workshops](https://github-samples.github.io/copilot-workshops/) first-steps workshops by James Montemagno ([github-samples/copilot-workshops](https://github.com/github-samples/copilot-workshops), MIT License).
